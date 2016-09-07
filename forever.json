@@ -6,7 +6,9 @@
     "watch": true,
     "script": "index.js",
     "sourceDir": "/home/node/Server",
-    "args": ["--port", "3000"]
+    "minUptime": "1000",
+    "spinSleepTime": "1000",
+    "args": ["--port", "3000", "--hostname": "localhost"]
   }
   /*,
   {

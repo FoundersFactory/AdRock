@@ -1,14 +1,14 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 
 //Getting apps
-require("./adrock/get.js")(app);
+require("./config/get.js")(app);
 
 //Uploading apps
-require("./adrock/post.js")(app);
+require("./config/post.js")(app);
 
 //Auth
-require("./adrock/auth.js")(app);
+require("./config/auth.js")(app);
 
 //Server
 app.listen(3000, "localhost", function () {

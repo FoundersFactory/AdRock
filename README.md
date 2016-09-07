@@ -30,4 +30,25 @@ eval `ssh-agent -s` && ssh-add /home/node/.ssh/id_gitlab_rsa
 `npm install forever -g`
 * Pulling changes and running the app:
 
-`cd Server && git pull && npm install adrock --save && cd .. && forever start ./Server/forever.json`
+`cd Server && git pull && npm install --save && cd .. && forever start ./Server/forever.json`
+* Restarting Forever:
+
+`forever stopall`
+
+* **Don't forget to enable the firewall!!**
+
+### Fixing Nginx
+
+* Pass requests onto node by modifying nginx's config (run as `boss`):
+
+`sudo nano /usr/local/nginx/conf/nginx.conf`
+* Add (to the `location` we want):
+
+```
+	proxy_pass         http://127.0.0.1:3000;
+    proxy_set_header   X-Real-IP            $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    proxy_set_header   Host                   $http_host;
+    proxy_set_header   X-NginX-Proxy    true;
+    proxy_redirect off;
+```

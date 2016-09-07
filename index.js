@@ -1,10 +1,16 @@
-var express = require('express');
+var express = require("express");
 var app = express();
 
-app.get('/adrock', function (req, res) {
-  res.send('Hello World!');
-});
+//Getting apps
+require("./adrock/get.js")(app);
 
-app.listen(3000, 'localhost', function () {
-  console.log('Example app listening on port 3000!');
+//Uploading apps
+require("./adrock/post.js")(app);
+
+//Auth
+require("./adrock/auth.js")(app);
+
+//Server
+app.listen(3000, "localhost", function () {
+  console.log("Example app listening on port 3000!");
 });

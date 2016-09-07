@@ -7,8 +7,7 @@
     "script": "index.js",
     "sourceDir": "/home/node/Server",
     "minUptime": "1000",
-    "spinSleepTime": "1000",
-    "args": ["--port", "3000", "--hostname": "localhost"]
+    "spinSleepTime": "1000"
   }
   /*,
   {

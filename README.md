@@ -30,11 +30,12 @@ eval `ssh-agent -s` && ssh-add /home/node/.ssh/id_gitlab_rsa
 `npm install forever -g`
 * Pulling changes and running the app:
 
-`cd Server && git pull && npm install --save && cd .. && forever start ./Server/forever.json`
+`cd Server && git pull && npm install --save && cd .. && NODE_ENV=production forever start ./Server/forever.json`
 * Updating (with ssh):
 
 `eval `ssh-agent -s` && ssh-add /home/node/.ssh/id_gitlab_rsa && \
-forever stopall && cd Server && git pull && cd .. && forever start ./Server/forever.json`
+forever stopall && cd Server && git pull && npm install --save && cd .. && \
+NODE_ENV=production forever start ./Server/forever.json`
 
 * **Don't forget to enable the firewall!!**
 

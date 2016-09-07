@@ -1,0 +1,22 @@
+[
+  {
+    // AdRock
+    "uid": "adrock",
+    "append": true,
+    "watch": true,
+    "script": "index.js",
+    "sourceDir": "/home/node/Server",
+    "args": ["--port", "3000"]
+  }
+  /*,
+  {
+    // App2
+    "uid": "app2",
+    "append": true,
+    "watch": true,
+    "script": "index.js",
+    "sourceDir": "/home/myuser/app2",
+    "args": ["--port", "8081"]
+  }
+  */
+]

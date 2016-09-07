@@ -5,9 +5,7 @@
     "append": true,
     "watch": true,
     "script": "index.js",
-    "sourceDir": "/home/node/Server",
-    "minUptime": "1000",
-    "spinSleepTime": "1000"
+    "sourceDir": "/home/node/Server"
   }
   /*,
   {

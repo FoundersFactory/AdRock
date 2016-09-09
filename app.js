@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //Getting apps
-app.use("/adrock", get);
+app.use("/adrock/:bundleId/:version", get);
 
 //Auth
 // app.use("/adrock/upload", authenticate);

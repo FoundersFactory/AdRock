@@ -9,8 +9,7 @@ module.exports = {
 	get: function(req, callback) {
 		var result = null;
 		
-		console.log(req.query);
-		console.log(req.path);
+		console.log(req.params);
 		
 		if (req.query.length > 0) {
 			callback(result);

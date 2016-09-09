@@ -18,9 +18,7 @@ const upload = multer(multer({
 				extension.indexOf("png") !== -1)
 			{
 				cb(null, true);
-				console.log(":)");
 			} else {
-				console.log(":/");
 				cb(null, false);
 			}
 		} catch (e) {
@@ -40,12 +38,10 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 	
 	let ipaFile = null;
 	let iconFile = null;
-	
-	console.log(req.body);
 		
 	try {
-		ipaFile = req.files["ipa"];
-		iconFile = req.files["icon"];
+		ipaFile = req.files["ipa"][0];
+		iconFile = req.files["icon"][0];
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}

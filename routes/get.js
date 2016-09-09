@@ -19,7 +19,7 @@ router.get("/:bundleId?/:version?/:file?", function(req, res)
 		
 		fs.stat(path, function(e, stats) {
 			if (e == null || e == undefined) {
-				res.status(200).send(path);
+				res.status(200).render(path);
 				return;
 			}
 			

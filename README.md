@@ -1,6 +1,6 @@
 # AdRock
 
-The tool to distribute AdHoc apps that rocks! 🤘
+The tool for distributing AdHoc apps that rocks! 🤘
 
 ## Setting up
 

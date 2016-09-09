@@ -6,13 +6,13 @@ const sanitiser = require("./sanitiser.js");
 router.get("/", function(req, res) 
 {
 	var error = function() {
-		res.sendStatus(404).send("We couldn't find your app... :(");
+		res.status(404).send("We couldn't find your app... :(");
 	}
 	
 	sanitiser.get(req, function(path) {
 		if (path == null) path = "index.html";
 		
-		path = sanitiser.rootPath + "/" + path;
+		path = sanitiser.rootPath + path;
 		
 		fs.stat(path, function(e, stats) {
 			if (e == null || e == undefined) {

@@ -73,6 +73,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			return;
 		}
 		
+		console.log(1);
+		
 		//Getting the params we need
 		let bundleId = null;
 		let version = null;
@@ -92,6 +94,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			error("No params...");
 		    return;
 		}
+		
+		console.log(2);
 		
 		let rootPath = sanitiser.rootPath + "/" + bundleId;
 		let indexPath = rootPath + "/index.html";
@@ -125,6 +129,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			return;
 		}
 		
+		console.log(3);
+		
 		//Next we fix the manifest
 		try {
 			let manifest = fs.readFileSync("./templates/manifest.plist", "utf8");
@@ -140,6 +146,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			error("Oops... Something went wrong with the manifest file...");
 			return;
 		}
+		
+		console.log(4);
 		
 		//Then we fix the HTML
 		try {

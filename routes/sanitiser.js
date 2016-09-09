@@ -9,9 +9,9 @@ module.exports = {
 	get: function(req, callback) {
 		var result = null;
 		
-		console.log(req.param);
-		console.log(req.param("bundleId"));
-		console.log(req.param("version"));
+		console.log(req.params);
+		console.log(req.query);
+		console.log(req.body);
 		
 		if (req.query.length > 0) {
 			callback(result);

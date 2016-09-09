@@ -47,7 +47,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}
 	
-	let error = function(message) {
+	let erase = function() {
 		try {
 			let paths = [];
 			if (ipaFile) paths.push(ipaFile.filename);
@@ -55,10 +55,12 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			remove.removeSync(paths, { ignoreErrors: true, ignoreMissing: true });
 		} catch (e) {
 			console.log("ERROR: post(/adrock/upload) + removeSync -> " + e);
-			//Noop
-		} finally {
-			res.status(406).send(message);
 		}
+	}
+	
+	let error = function(message) {
+		erase();
+		res.status(406).send(message);
 	}
 	
 	if (ipaFile == null) {
@@ -167,6 +169,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		//TODO: get bitly URL
 		
 		//GREAT SUCCESS
+		erase();
 		res.status(200).send("https://bellapplab.xyz/adrock/" + bundleId + "/index.html");
 	});
 });

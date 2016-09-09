@@ -5,6 +5,7 @@ const multer = require("multer");
 const remove = require("remove");
 const plist = require("plist");
 const moment = require("moment");
+const dotenv = require("dotenv");
 
 const upload = multer(multer({ 
 	dest: "./tmp",
@@ -67,8 +68,6 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		return;
 	}
 	
-	console.log(0);
-	
 	sanitiser.post(req, function(path) {
 		if (path == null) {
 			error("What are you trying to do?");
@@ -118,6 +117,18 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			console.log("ERROR: post(/adrock/upload) + deleting stuff -> " + e);
 		}
 		
+		//Creating folders if needed
+		try {
+			fs.mkdirSync(rootPath);
+		} catch (e) {
+			console.log("WARNING: post(/adrock/upload) + creating root folder -> " + e);
+		}
+		try {
+			fs.mkdirSync(folderPath);
+		} catch (e) {
+			console.log("WARNING: post(/adrock/upload) + creating version folder -> " + e);
+		}
+		
 		try {
 			//Now we save the app
 			fs.renameSync(ipaFile.path, appPath);
@@ -133,12 +144,14 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		
 		console.log(3);
 		
+		dotenv.load();
+		
 		//Next we fix the manifest
 		try {
 			let manifest = fs.readFileSync("./templates/manifest.plist", "utf8");
-			manifest = manifest.replace("{IPA}", "https://bellapplab.xyz/adrock/" + bundleId + "/v" + version + "/app.ipa")
-								.replace("{ICON}", "https://bellapplab.xyz/adrock/" + bundleId + "/icon.png")
-								.replace("{ICON}", "https://bellapplab.xyz/adrock/" + bundleId + "/icon.png")
+			manifest = manifest.replace("{IPA}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/v" + version + "/app.ipa")
+								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/icon.png")
+								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/icon.png")
 								.replace("{BUNDLE_ID}", bundleId)
 								.replace("{VERSION}", version)
 								.replace("{NAME}", name);

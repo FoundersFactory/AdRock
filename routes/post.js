@@ -67,6 +67,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		return;
 	}
 	
+	console.log(0);
+	
 	sanitiser.post(req, function(path) {
 		if (path == null) {
 			error("What are you trying to do?");

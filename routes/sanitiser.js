@@ -1,6 +1,6 @@
 module.exports = {
 	post: function(req, callback) {
-		if (req.path == null || req.path.length == 0) {
+		if (req.path == null || req.path.length == 0 || req.path === "/") {
 			callback("");
 			return;
 		}

@@ -39,8 +39,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 	let iconFile = null;
 	
 	try {
-		ipaFile = req.files["ipa"][0];
-		iconFile = req.files["icon"][0];
+		ipaFile = req.files["ipa"];
+		iconFile = req.files["icon"];
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}

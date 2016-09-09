@@ -15,7 +15,7 @@ router.get("/:bundleId?/:version?/:file?", function(req, res)
 			return;
 		}
 		
-		path = sanitiser.rootPath + "/" + path;
+		path = "/home/node/apps/" + path;
 		
 		fs.stat(path, function(e, stats) {
 			if (e) {

@@ -6,6 +6,8 @@ const jwt = require("express-jwt");
 const cors = require("cors");
 const http = require("http");
 
+dotenv.load();
+
 const get = require("./routes/get");
 const post = require("./routes/post");
 const auth = require("./routes/auth");
@@ -13,7 +15,6 @@ const auth = require("./routes/auth");
 const app = express();
 const router = express.Router();
 
-dotenv.load();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

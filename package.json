@@ -1,7 +1,7 @@
 {
   "name": "adrock",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "private": true,
   "keywords": ["mobile","adhoc","ios","android"],
   "author": "Bell App Lab",

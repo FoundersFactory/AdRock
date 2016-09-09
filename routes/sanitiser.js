@@ -9,7 +9,7 @@ module.exports = {
 	get: function(req, callback) {
 		var result = null;
 		
-		console.log(req.params["bundleId"]);
+		console.log(req.params);
 		console.log(req.query);
 		console.log(req.body);
 		

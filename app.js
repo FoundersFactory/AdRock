@@ -31,6 +31,13 @@ app.use("/adrock/upload", authenticate);
 
 //Uploading apps
 app.use("/adrock/upload", post);
+app.use(function (err, req, res, next) {
+	if (err.name === 'UnauthorizedError') {
+		res.status(401).send('invalid token...');
+		return;
+	}
+	next(err);
+});
 
 //Server
 var port = process.env.PORT || 3001;

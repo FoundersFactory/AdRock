@@ -119,6 +119,11 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		
 		//Creating folders if needed
 		try {
+			fs.mkdirSync(sanitiser.rootPath);
+		} catch (e) {
+			console.log("WARNING: post(/adrock/upload) + creating apps folder -> " + e);
+		}
+		try {
 			fs.mkdirSync(rootPath);
 		} catch (e) {
 			console.log("WARNING: post(/adrock/upload) + creating root folder -> " + e);

@@ -30,6 +30,11 @@ const upload = multer(multer({
 module.exports = function(app) {
 	app.post("/adrock/upload", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(req, res) {
 		
+		if (req.files == null || req.files.length == 0) {
+			res.sendStatus(406);
+			return;
+		}
+		
 		let ipaFile = null;
 		let iconFile = null;
 		
@@ -37,7 +42,7 @@ module.exports = function(app) {
 			ipaFile = req.files["ipa"][0];
 			iconFile = req.files["icon"][0];
 		} catch (e) {
-			console.log("ERROR: post(/adrock/upload + getting files -> " + e);
+			console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 		}
 		
 		let error = function() {
@@ -47,7 +52,7 @@ module.exports = function(app) {
 				if (iconFile) paths.push(iconFile.filename); 
 				remove.removeSync(paths, { ignoreErrors: true, ignoreMissing: true });
 			} catch (e) {
-				console.log("ERROR: post(/adrock/upload + removeSync -> " + e);
+				console.log("ERROR: post(/adrock/upload) + removeSync -> " + e);
 				//Noop
 			} finally {
 				res.sendStatus(406);
@@ -75,7 +80,7 @@ module.exports = function(app) {
 				name = req.body["name"];
 			}
 			catch (e) {
-				console.log("ERROR: post(/adrock/upload + bundleId + version + name -> " + e);
+				console.log("ERROR: post(/adrock/upload) + bundleId + version + name -> " + e);
 			}
 			if ((bundleId == null || bundleId.length == 0) ||
 				(version == null || version.length == 0) ||
@@ -101,7 +106,7 @@ module.exports = function(app) {
 					remove.removeSync(iconPath, { ignoreErrors: true, ignoreMissing: true });
 				}
 			} catch (e) {
-				console.log("ERROR: post(/adrock/upload + deleting stuff -> " + e);
+				console.log("ERROR: post(/adrock/upload) + deleting stuff -> " + e);
 			}
 			
 			try {
@@ -112,7 +117,7 @@ module.exports = function(app) {
 					fs.renameSync(iconFile.path, iconPath);
 				}
 			} catch (e) {
-				console.log("ERROR: post(/adrock/upload + moving stuff -> " + e);
+				console.log("ERROR: post(/adrock/upload) + moving stuff -> " + e);
 				error();
 				return;
 			}
@@ -128,7 +133,7 @@ module.exports = function(app) {
 									.replace("{NAME}", name);
 				fs.writeFileSync(folderPath + "/" + "manifest.plist", manifest);
 			} catch (e) {
-				console.log("ERROR: post(/adrock/upload + fixing the manifest -> " + e);
+				console.log("ERROR: post(/adrock/upload) + fixing the manifest -> " + e);
 				error();
 				return;
 			}
@@ -152,7 +157,7 @@ module.exports = function(app) {
 				main = main.replace("{VERSIONS}", list);
 				fs.writeFileSync(rootPath + "/" + "index.html", main);
 			} catch (e) {
-				console.log("ERROR: post(/adrock/upload + fixing index.html -> " + e);
+				console.log("ERROR: post(/adrock/upload) + fixing index.html -> " + e);
 				error();
 				return;
 			}

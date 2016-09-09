@@ -14,12 +14,13 @@ module.exports = function(app) {
 			
 			path = sanitiser.rootPath + "/" + path;
 			
-			fs.stat(path, function(err, stats) {
+			fs.stat(path, function(e, stats) {
 				if (err == null || err == undefined) {
 					res.status(200).send(path);
 					return;
 				}
 				
+				console.log("ERROR: get(/adrock) + getting stuff -> " + e "\nAt Path: " + req.path);
 				error();
 			});
 		});

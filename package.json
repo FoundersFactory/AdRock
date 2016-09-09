@@ -6,7 +6,7 @@
   "author": "Bell App Lab",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.0.0",
+    "express": "^4.11.0",
     "express-jwt": "^5.0.0",
     "multer": "^1.2.0",
     "remove": "^0.1.0",

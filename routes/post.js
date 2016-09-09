@@ -18,10 +18,13 @@ const upload = multer(multer({
 				extension.indexOf("png") !== -1)
 			{
 				cb(null, true);
+				console.log(":)");
 			} else {
+				console.log(":/");
 				cb(null, false);
 			}
 		} catch (e) {
+			console.log(":/");
 			cb(null, false);
 		}
 	}

@@ -20,7 +20,7 @@ module.exports = function(app) {
 					return;
 				}
 				
-				console.log("ERROR: get(/adrock) + getting stuff -> " + e "\nAt Path: " + req.path);
+				console.log("ERROR: get(/adrock) + getting stuff -> " + e + "\nAt Path: " + req.path);
 				error();
 			});
 		});

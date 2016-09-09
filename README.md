@@ -48,5 +48,5 @@ NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./Server
 * Add (to the `location` we want):
 
 ```
-	include             /home/node/Server/nginx.conf;
+	include	/home/node/Server/nginx.conf;
 ```

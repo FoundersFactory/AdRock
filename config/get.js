@@ -9,7 +9,7 @@ module.exports = function(app) {
 			res.sendStatus(404);
 		}
 		
-		sanitiser.sanitise(req, function(path) {
+		sanitiser.get(req, function(path) {
 			if (path == null) path = "index.html";
 			
 			path = sanitiser.rootPath + "/" + path;

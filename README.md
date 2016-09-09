@@ -48,11 +48,5 @@ NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./Server
 * Add (to the `location` we want):
 
 ```
-	proxy_pass         http://127.0.0.1:3000;
-    proxy_set_header   X-Real-IP            $remote_addr;
-    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-    proxy_set_header   Host$http_host;
-    proxy_set_header   X-NginX-Proxy    true;
-    proxy_pass_header   Authorization;  
-    proxy_redirect off;
+	include             /home/node/Server/nginx.conf;
 ```

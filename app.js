@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/adrock", get);
 
 //Auth
-app.use("/adrock/upload", authenticate);
+// app.use("/adrock/upload", authenticate);
 
 //Uploading apps
 app.use("/adrock/upload", post);

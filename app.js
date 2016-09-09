@@ -10,7 +10,11 @@ dotenv.load();
 
 const get = require("./routes/get");
 const post = require("./routes/post");
-const auth = require("./routes/auth");
+
+var authenticate = jwt({
+	secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
+	audience: process.env.AUTH0_CLIENT_ID
+});
 
 const app = express();
 const router = express.Router();
@@ -23,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/adrock", get);
 
 //Auth
-app.use("/adrock/secure", auth);
+app.use("/adrock/secure", authenticate);
 
 //Uploading apps
 app.use("/adrock/secure/upload", post);

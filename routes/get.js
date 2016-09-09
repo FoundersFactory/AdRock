@@ -15,7 +15,7 @@ router.get("/", function(req, res)
 		path = sanitiser.rootPath + "/" + path;
 		
 		fs.stat(path, function(e, stats) {
-			if (err == null || err == undefined) {
+			if (e == null || e == undefined) {
 				res.status(200).send(path);
 				return;
 			}

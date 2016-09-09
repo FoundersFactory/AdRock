@@ -1,21 +1,21 @@
 [
-  {
-    // AdRock
-    "uid": "adrock",
-    "append": true,
-    "watch": true,
-    "script": "app.js",
-    "sourceDir": "/home/node/Server"
-  }
-  /*,
-  {
-    // App2
-    "uid": "app2",
-    "append": true,
-    "watch": true,
-    "script": "index.js",
-    "sourceDir": "/home/myuser/app2",
-    "args": ["--port", "8081"]
-  }
-  */
+	{
+		// AdRock
+		"uid": "adrock",
+		"append": true,
+		"watch": true,
+		"script": "app.js",
+		"sourceDir": "/home/node/Server"
+	}
+	/*,
+	{
+		// App2
+		"uid": "app2",
+		"append": true,
+		"watch": true,
+		"script": "index.js",
+		"sourceDir": "/home/myuser/app2",
+		"args": ["--port", "8081"]
+	}
+	*/
 ]

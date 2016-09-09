@@ -28,8 +28,13 @@ const upload = multer(multer({
 }));
 
 //Uploading apps
-router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(req, res) 
+router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(err, req, res, next) 
 {		
+	if (err.name === 'UnauthorizedError') {
+	    res.status(401).send('invalid token...');
+	    return;
+    }
+	
 	if (req.files == null || req.files.length == 0) {
 		res.status(406).send("Where are the files?");
 		return;

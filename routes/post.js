@@ -38,7 +38,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 	let ipaFile = null;
 	let iconFile = null;
 	
-	console.log(req.files);
+	console.log(req.body);
 		
 	try {
 		ipaFile = req.files["ipa"];

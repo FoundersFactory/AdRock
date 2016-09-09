@@ -12,5 +12,5 @@ require("./config/auth.js")(app);
 
 //Server
 app.listen(3000, "localhost", function () {
-  console.log("\o/");
+  console.log("\\o/");
 });

@@ -31,7 +31,7 @@ module.exports = function(app) {
 	app.post("/adrock/upload", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(req, res) {
 		
 		if (req.files == null || req.files.length == 0) {
-			res.sendStatus(406);
+			res.status(406).send("Where are the files?");
 			return;
 		}
 		
@@ -45,7 +45,7 @@ module.exports = function(app) {
 			console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 		}
 		
-		let error = function() {
+		let error = function(message) {
 			try {
 				let paths = [];
 				if (ipaFile) paths.push(ipaFile.filename);
@@ -55,18 +55,18 @@ module.exports = function(app) {
 				console.log("ERROR: post(/adrock/upload) + removeSync -> " + e);
 				//Noop
 			} finally {
-				res.sendStatus(406);
+				res.status(406).send(message);
 			}
 		}
 		
 		if (ipaFile == null) {
-			error();
+			error("Where is the app?!");
 			return;
 		}
 		
 		sanitiser.post(req, function(path) {
 			if (path == null) {
-				error();
+				error("What are you trying to do?");
 				return;
 			}
 			
@@ -86,7 +86,7 @@ module.exports = function(app) {
 				(version == null || version.length == 0) ||
 				(name == null || name.length == 0))
 			{
-				error();
+				error("No params...");
 			    return;
 			}
 			
@@ -118,7 +118,7 @@ module.exports = function(app) {
 				}
 			} catch (e) {
 				console.log("ERROR: post(/adrock/upload) + moving stuff -> " + e);
-				error();
+				error("Oops... We couldn't save your app or your icon...");
 				return;
 			}
 			
@@ -134,7 +134,7 @@ module.exports = function(app) {
 				fs.writeFileSync(folderPath + "/" + "manifest.plist", manifest);
 			} catch (e) {
 				console.log("ERROR: post(/adrock/upload) + fixing the manifest -> " + e);
-				error();
+				error("Oops... Something went wrong with the manifest file...");
 				return;
 			}
 			
@@ -158,7 +158,7 @@ module.exports = function(app) {
 				fs.writeFileSync(rootPath + "/" + "index.html", main);
 			} catch (e) {
 				console.log("ERROR: post(/adrock/upload) + fixing index.html -> " + e);
-				error();
+				error("Oops... Something went wrong with the index.html file...");
 				return;
 			}
 			

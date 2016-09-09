@@ -6,7 +6,7 @@ module.exports = function(app) {
 	app.get("/adrock", function(req, res) 
 	{
 		var error = function() {
-			res.sendStatus(404);
+			res.sendStatus(404).send("We couldn't find your app... :(");
 		}
 		
 		sanitiser.get(req, function(path) {

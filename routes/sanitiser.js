@@ -1,9 +1,10 @@
 module.exports = {
 	post: function(req, callback) {
 		if (req.path == null || req.path.length == 0) {
-			return "";
+			callback("");
+			return;
 		}
-		return null;
+		callback(null);
 	},
 	get: function(req, callback) {
 		var result = null;

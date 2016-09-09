@@ -79,7 +79,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		let version = null;
 		let name = null;		
 		try {
-		    bundleId = req.body["bundleId"].toLowerCase().split(" ").join("");
+		    bundleId = req.body["bundleId"].split(" ").join("");
 			version = req.body["version"];
 			name = req.body["name"];
 		}
@@ -94,7 +94,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		    return;
 		}
 		
-		let rootPath = sanitiser.rootPath + "/" + bundleId;
+		let rootPath = sanitiser.rootPath + "/" + bundleId.toLowerCase();
 		let indexPath = rootPath + "/index.html";
 		let folderPath = rootPath + "/v" + version;
 		let appPath = folderPath + "/app.ipa";
@@ -148,9 +148,9 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		//Next we fix the manifest
 		try {
 			let manifest = fs.readFileSync("./templates/manifest.plist", "utf8");
-			manifest = manifest.replace("{IPA}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/v" + version + "/app.ipa")
-								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/icon.png")
-								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId + "/icon.png")
+			manifest = manifest.replace("{IPA}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/v" + version + "/app.ipa")
+								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/icon.png")
+								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/icon.png")
 								.replace("{BUNDLE_ID}", bundleId)
 								.replace("{VERSION}", version)
 								.replace("{NAME}", name);
@@ -189,7 +189,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		
 		//GREAT SUCCESS
 		erase();
-		res.status(200).send("https://bellapplab.xyz/adrock/" + bundleId + "/index.html");
+		res.status(200).send("https://bellapplab.xyz/adrock/" + bundleId.toLowerCase() + "/index.html");
 	});
 });
 

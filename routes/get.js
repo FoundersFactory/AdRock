@@ -18,13 +18,18 @@ router.get("/:bundleId?/:version?/:file?", function(req, res)
 		path = sanitiser.rootPath + "/" + path;
 		
 		fs.stat(path, function(e, stats) {
-			if (e == null || e == undefined) {
+			if (e) {
+				console.log("ERROR: get(/adrock) + getting stuff -> " + e + "\nAt Path: " + req.path);
+				error();
+				return;
+			}
+			
+			if (path.indexOf(".html") !== -1) {
 				res.status(200).send(fs.readFileSync(path, "utf8"));
 				return;
 			}
 			
-			console.log("ERROR: get(/adrock) + getting stuff -> " + e + "\nAt Path: " + req.path);
-			error();
+			res.status(200).sendFile(path);
 		});
 	});
 });

@@ -10,13 +10,13 @@ module.exports = {
 		let result = null;
 		
 		if (req.params == null || req.params.length == 0) {
-			callback(result);
+			callback();
 			return;
 		}
 		
 		let bundleId = req.params["bundleId"];
 		if (bundleId == null || bundleId.length == 0) {
-			callback(null);
+			callback();
 			return;
 		}
 		
@@ -39,7 +39,7 @@ module.exports = {
 			return;
 		}
 		
-		callback(null);
+		callback();
 	},
 	rootPath: "./apps"
 };

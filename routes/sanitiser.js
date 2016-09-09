@@ -7,24 +7,36 @@ module.exports = {
 		callback(null);
 	},
 	get: function(req, callback) {
-		var result = null;
+		let result = null;
 		
-		console.log(req.params);
-		console.log(req.query);
-		console.log(req.body);
-		
-		if (req.query.length > 0) {
+		if (req.params == null || req.params.length == 0) {
 			callback(result);
 			return;
 		}
 		
-		try {
-			result = req.path.toLowerCase();
-		} catch (e) {
-			//Noop
-		} finally {
+		let bundleId = req.params["bundleId"];
+		if (bundleId == null || bundleId.length == 0) {
 			callback(result);
+			return;
 		}
+		
+		result = bundleId.toLowerCase();
+		
+		let version = req.params["version"];
+		if (version == null || version.length == 0) {
+			callback(result + "/" + "index.html");
+			return;
+		}
+		
+		result += "/" + version.toLowerCase();
+		
+		let file = req.params["file"];
+		if (file != null && file.length > 0 && file.indexOf(".") !== -1) {
+			callback(result + "/" + file.toLowerCase());
+			return;
+		}
+		
+		callback(result);
 	},
 	rootPath: "./apps"
 };

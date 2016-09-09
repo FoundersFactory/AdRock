@@ -11,7 +11,7 @@ dotenv.load();
 const get = require("./routes/get");
 const post = require("./routes/post");
 
-var authenticate = jwt({
+const authenticate = jwt({
 	secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
 	audience: process.env.AUTH0_CLIENT_ID
 });
@@ -40,7 +40,7 @@ app.use(function (err, req, res, next) {
 });
 
 //Server
-var port = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 
 app.listen(port, "localhost", function () {
 	console.log("\\o/");

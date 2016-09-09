@@ -3,16 +3,19 @@ const fs = require("fs");
 const sanitiser = require("./sanitiser.js");
 
 //Getting apps
-router.get("/:bundleId/:version", function(req, res) 
+router.get("/:bundleId/:version/:file", function(req, res) 
 {
-	var error = function() {
+	let error = function() {
 		res.status(404).send("We couldn't find your app... :(");
 	}
 	
 	sanitiser.get(req, function(path) {
-		if (path == null) path = "index.html";
+		if (path == null) {
+			error();
+			return;
+		}
 		
-		path = sanitiser.rootPath + path;
+		path = sanitiser.rootPath + "/" + path;
 		
 		fs.stat(path, function(e, stats) {
 			if (e == null || e == undefined) {

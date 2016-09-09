@@ -34,9 +34,12 @@ module.exports = {
 		if (file != null && file.length > 0 && file.indexOf(".") !== -1) {
 			callback(result + "/" + file.toLowerCase());
 			return;
+		} else if (version.indexOf(".") !== -1) {
+			callback(result);
+			return;
 		}
 		
-		callback(result);
+		callback(null);
 	},
 	rootPath: "./apps"
 };

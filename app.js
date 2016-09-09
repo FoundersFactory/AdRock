@@ -27,10 +27,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/adrock", get);
 
 //Auth
-app.use("/adrock/secure", authenticate);
+app.use("/adrock/upload", authenticate);
 
 //Uploading apps
-app.use("/adrock/secure/upload", post);
+app.use("/adrock/upload", post);
 
 //Server
 var port = process.env.PORT || 3001;

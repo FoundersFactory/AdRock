@@ -10,6 +10,8 @@ module.exports = {
 		var result = null;
 		
 		console.log(req.params);
+		console.log(req.params.bundleId);
+		console.log(req.params.version);
 		
 		if (req.query.length > 0) {
 			callback(result);

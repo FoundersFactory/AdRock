@@ -33,7 +33,7 @@ app.use("/adrock/upload", authenticate);
 app.use("/adrock/upload", post);
 app.use(function (err, req, res, next) {
 	if (err.name === 'UnauthorizedError') {
-		res.status(401).send('invalid token...');
+		res.status(401).send('Invalid token...');
 		return;
 	}
 	next(err);

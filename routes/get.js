@@ -3,7 +3,7 @@ const fs = require("fs");
 const sanitiser = require("./sanitiser.js");
 
 //Getting apps
-router.get("/:bundleId/:version/:file", function(req, res) 
+router.get("/:bundleId?/:version?/:file?", function(req, res) 
 {
 	let error = function() {
 		res.status(404).send("We couldn't find your app... :(");

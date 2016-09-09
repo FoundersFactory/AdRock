@@ -16,7 +16,7 @@ module.exports = {
 		
 		let bundleId = req.params["bundleId"];
 		if (bundleId == null || bundleId.length == 0) {
-			callback(result);
+			callback(null);
 			return;
 		}
 		

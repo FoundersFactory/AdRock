@@ -13,8 +13,9 @@ const upload = multer(multer({
 	},
 	fileFilter: function(req, file, cb) {
 		try {
-			let extension = file.filename.split(".").pop().toLowerCase();
+			console.log(file);
 			console.log(file.filename);
+			let extension = file.filename.split(".").pop().toLowerCase();
 			console.log(extension);
 			if (extension.indexOf("ipa") !== -1 ||
 				extension.indexOf("png") !== -1)

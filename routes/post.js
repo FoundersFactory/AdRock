@@ -26,7 +26,7 @@ const upload = multer(multer({
 				cb(null, false);
 			}
 		} catch (e) {
-			console.log(":/");
+			console.log("Multer file filter error: " + e);
 			cb(null, false);
 		}
 	}

@@ -44,10 +44,15 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		
 	try {
 		appFile = req.files["app"][0];
-		iconFile = req.files["icon"][0];
 		extension = appFile.path.toLowerCase().split(".").pop();
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
+	}
+	
+	try {
+		iconFile = req.files["icon"][0];
+	} catch (e) {
+		console.log("WARNING: post(/adrock/upload) + no icon -> " + e);
 	}
 	
 	let erase = function() {

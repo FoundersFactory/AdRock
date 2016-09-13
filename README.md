@@ -29,10 +29,10 @@ PORT=3000
 EXTERNAL_URL=https://example.com
 ```
 
-* Pulling changes and running the app (from `/adrock`):
+* Pulling changes and running the app (from `/Server`):
 
-`git pull && npm install --save && \
-NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./adrock/forever.json`
+`forever stopall && git pull && npm install --save && \
+NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./forever.json`
 
 This will:
 
@@ -46,7 +46,7 @@ If using Nginx, add this to your main `.conf` file:
 
 ```
 	location /adrock {
-		include	/<path-to>/adrock/nginx.conf;
+		include	/<path-to-adrock>/Server/nginx.conf;
 	}
 ```
 

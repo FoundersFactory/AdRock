@@ -14,13 +14,14 @@ module.exports = {
 			return;
 		}
 		
-		let bundleId = req.params["bundleId"];
-		if (bundleId == null || bundleId.length == 0) {
+		try {
+			result = req.params["bundleId"].toLowerCase();
+			result += "/" + req.params["platform"].toLowerCase();
+		} catch (e) {
+			console.log("ERROR: sanitiser + get -> " + e + "\nWith request: " + req);
 			callback();
 			return;
 		}
-		
-		result = bundleId.toLowerCase();
 		
 		let version = req.params["version"];
 		if (version == null || version.length == 0) {

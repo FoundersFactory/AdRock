@@ -16,7 +16,8 @@ const upload = multer(multer({
 		try {
 			let extension = file.originalname.split(".").pop().toLowerCase();
 			if (extension.indexOf("ipa") !== -1 ||
-				extension.indexOf("png") !== -1)
+				extension.indexOf("png") !== -1 || 
+				extension.indexOf("apk") !== -1)
 			{
 				cb(null, true);
 			} else {
@@ -30,19 +31,21 @@ const upload = multer(multer({
 }));
 
 //Uploading apps
-router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(req, res) 
+router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", maxCount: 1 }]), function(req, res) 
 {		
 	if (req.files == null || req.files.length == 0) {
 		res.status(406).send("Where are the files?");
 		return;
 	}
 	
-	let ipaFile = null;
+	let appFile = null;
 	let iconFile = null;
+	let extension = null;
 		
 	try {
-		ipaFile = req.files["ipa"][0];
+		appFile = req.files["app"][0];
 		iconFile = req.files["icon"][0];
+		extension = appFile.path.toLowerCase().split(".").pop();
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}
@@ -50,8 +53,8 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 	let erase = function() {
 		try {
 			let paths = [];
-			if (ipaFile) paths.push(ipaFile.filename);
-			if (iconFile) paths.push(iconFile.filename); 
+			if (appFile) paths.push(appFile.path);
+			if (iconFile) paths.push(iconFile.path); 
 			remove.removeSync(paths, { ignoreErrors: true, ignoreMissing: true });
 		} catch (e) {
 			console.log("ERROR: post(/adrock/upload) + removeSync -> " + e);
@@ -63,8 +66,13 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		res.status(406).send(message);
 	}
 	
-	if (ipaFile == null) {
+	if (appFile == null) {
 		error("Where is the app?!");
+		return;
+	}
+	
+	if (extension == null || extension.length == 0) {
+		error("Where is the app's extension?!");
 		return;
 	}
 	
@@ -94,10 +102,20 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		    return;
 		}
 		
+		dotenv.load();
+		
 		let rootPath = sanitiser.rootPath + "/" + bundleId.toLowerCase();
+		let externalRootPath = process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase();
+		if (extension === "ipa") {
+			rootPath += "/" + "ios";
+			externalRootPath += "/" + "ios";
+		} else {
+			rootPath += "/" + "android";
+			externalRootPath += "/" + "android";
+		}
 		let indexPath = rootPath + "/index.html";
 		let folderPath = rootPath + "/v" + version;
-		let appPath = folderPath + "/app.ipa";
+		let appPath = folderPath + "/app." + extension;
 		let iconPath = rootPath + "/icon.png";
 		
 		try {
@@ -132,7 +150,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		
 		try {
 			//Now we save the app
-			fs.renameSync(ipaFile.path, appPath);
+			fs.renameSync(appFile.path, appPath);
 			//And the icon
 			if (iconFile) {
 				fs.renameSync(iconFile.path, iconPath);
@@ -143,34 +161,40 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 			return;
 		}
 		
-		dotenv.load();
-		
 		//Next we fix the manifest
-		try {
-			let manifest = fs.readFileSync("./templates/manifest.plist", "utf8");
-			manifest = manifest.replace("{IPA}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/v" + version + "/app.ipa")
-								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/icon.png")
-								.replace("{ICON}", process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase() + "/icon.png")
-								.replace("{BUNDLE_ID}", bundleId)
-								.replace("{VERSION}", version)
-								.replace("{NAME}", name);
-			fs.writeFileSync(folderPath + "/" + "manifest.plist", manifest);
-		} catch (e) {
-			console.log("ERROR: post(/adrock/upload) + fixing the manifest -> " + e);
-			error("Oops... Something went wrong with the manifest file...");
-			return;
+		if (extension === "ipa") {
+			try {
+				let manifest = fs.readFileSync("./templates/manifest.plist", "utf8");
+				manifest = manifest.replace("{IPA}", externalRootPath + "/v" + version + "/app." + extension)
+									.replace("{ICON}", externalRootPath + "/icon.png")
+									.replace("{ICON}", externalRootPath + "/icon.png")
+									.replace("{BUNDLE_ID}", bundleId)
+									.replace("{VERSION}", version)
+									.replace("{NAME}", name);
+				fs.writeFileSync(folderPath + "/" + "manifest.plist", manifest);
+			} catch (e) {
+				console.log("ERROR: post(/adrock/upload) + fixing the manifest -> " + e);
+				error("Oops... Something went wrong with the manifest file...");
+				return;
+			}
 		}
 		
 		//Then we fix the HTML
 		try {
 			let main = fs.readFileSync("./templates/main.html", "utf8");
-			let listTemplate = fs.readFileSync("./templates/list.html", "utf8");
+			let listTemplate = null;
+			if (extension === "apk") {
+				listTemplate = fs.readFileSync("./templates/android_list.html", "utf8");
+			} else {
+				listTemplate = fs.readFileSync("./templates/ios_list.html", "utf8");
+			}
 			let list = "";
 			let elements = fs.readdirSync(rootPath);
 			for (let i=0; i<elements.length; i++) {
 				let element = elements[i];
 				if (element.indexOf("v") !== -1) {
-					list += listTemplate.replace("{BUNDLE_ID}", bundleId)
+					list += listTemplate.replace("{URL}", process.env.EXTERNAL_URL)
+										.replace("{BUNDLE_ID}", bundleId)
 										.replace("{VERSION}", version)
 										.replace("{VERSION}", version)
 										.replace("{NAME}", name)
@@ -178,7 +202,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 				}
 			}
 			main = main.replace("{VERSIONS}", list);
-			fs.writeFileSync(rootPath + "/" + "index.html", main);
+			fs.writeFileSync(externalRootPath + "/" + "index.html", main);
 		} catch (e) {
 			console.log("ERROR: post(/adrock/upload) + fixing index.html -> " + e);
 			error("Oops... Something went wrong with the index.html file...");
@@ -189,7 +213,7 @@ router.post("/", upload.fields([{ name: "ipa", maxCount: 1 }, { name: "icon", ma
 		
 		//GREAT SUCCESS
 		erase();
-		res.status(200).send("https://bellapplab.xyz/adrock/" + bundleId.toLowerCase() + "/index.html");
+		res.status(200).send(externalRootPath + "/index.html");
 	});
 });
 

@@ -11,13 +11,13 @@ Rocking the AdHoc world! 🤘
 
 * Cloning the repo:
 
-`git clone -o adrock git@gitlab.com:AdRock/Server.git`
+`git clone git@gitlab.com:AdRock/Server.git`
 * Installing Forever:
 
 `npm install forever -g`
 * Create a `.env` file:
 
-`cd adrock && touch .env`
+`cd Server && touch .env`
 * Configure the `.env` file with your info:
 
 ```

@@ -52,8 +52,9 @@ If using Nginx, add this to your main `.conf` file:
 
 ## Using AdRock
 
-To upload a new app or a new version to AdRock, you'll need to make a multipart-form `POST` request to `<domain>/adrock/upload` containing:
+To upload a new app or a new version for an existing app, you'll need to make a multipart-form `POST` request to `<domain>/adrock/upload` containing:
 
+* Auth0's JWT
 * (form field) `app` => an `.ipa` or `.apk` file of no more than 512mb in size
 * `icon` => a `.png` file for the app's icon (only necessary on the first upload)
 * `bundleId` => the app's full Bundle Id (eg. _com.example.raddest-app-ever_)

@@ -221,7 +221,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 				}
 			}
 			main = main.replace("{VERSIONS}", list);
-			fs.writeFileSync(externalRootPath + "/" + "index.html", main);
+			fs.writeFileSync(platformPath + "/index.html", main);
 		} catch (e) {
 			console.log("ERROR: post(/adrock/upload) + fixing index.html -> " + e);
 			error("Oops... Something went wrong with the index.html file...");

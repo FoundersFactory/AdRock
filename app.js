@@ -42,6 +42,6 @@ app.use(function (err, req, res, next) {
 //Server
 const port = process.env.PORT || 3001;
 
-app.listen(port, "localhost", function () {
+app.listen(port, process.env.HOST || "localhost", function () {
 	console.log("\\o/");
 });

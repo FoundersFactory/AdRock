@@ -18,7 +18,7 @@ Rocking the AdHoc world! 🤘
 * Create a `.env` file:
 
 `cd Server && touch .env`
-* Configure the `.env` file with your info:
+* Log into [Auth0](https://www.auth0.com), create a Client for **AdRock** and configure the `.env` file with your info:
 
 ```
 AUTH0_CLIENT_ID= 
@@ -26,6 +26,7 @@ AUTH0_CLIENT_SECRET=
 AUTH0_DOMAIN=<your-company-name>.eu.auth0.com 
 AUTH0_CALLBACK_URL=http://localhost:3000/adrock
 PORT=3000
+HOST=localhost
 EXTERNAL_URL=https://example.com
 ```
 
@@ -39,6 +40,10 @@ This will:
 0. start the default `express` app on port `3000`
 0. create a `GET <domain>/adrock/<full-app-bundle-id>` endpoint
 0. create a `POST <domain>/adrock/upload` endpoint to receive apps
+
+### Express
+
+If you have an express app already and want to integrate **AdRock** to it
 
 ### Nginx
 
@@ -67,6 +72,7 @@ Upon success, you'll get the URL for the app's `index.html`, which is the same a
 
 ```
 	curl -X POST <domain>/adrock/upload \
+		-H Authorization=<your-jwt>
 		-F app=<path/to/ipa>
 		-F icon=<path/to/icon>
 		-F bundleId=<full-app-bundle-id>

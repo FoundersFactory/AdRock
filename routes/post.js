@@ -44,7 +44,9 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		
 	try {
 		appFile = req.files["app"][0];
+		console.log(appFile.filename);
 		extension = appFile.filename.toLowerCase().split(".").pop();
+		console.log(extension);
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}

@@ -25,7 +25,7 @@ module.exports = {
 		
 		let version = req.params["version"];
 		if (version == null || version.length == 0) {
-			callback(result + "/" + "index.html");
+			callback(result + "/index.html");
 			return;
 		}
 		

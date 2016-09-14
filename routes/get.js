@@ -24,8 +24,8 @@ router.get("/:bundleId?/:platform?/:version?/:file?", function(req, res)
 				return;
 			}
 			
-			i/*
-f (path.indexOf(".html") !== -1) {
+/*
+			if (path.indexOf(".html") !== -1) {
 				res.status(200).send(fs.readFileSync(path, "utf8"));
 				return;
 			}

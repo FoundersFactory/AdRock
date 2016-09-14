@@ -208,7 +208,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 				listTemplate = fs.readFileSync("./templates/ios_list.html", "utf8");
 			}
 			let list = "";
-			let elements = fs.readdirSync(rootPath);
+			let elements = fs.readdirSync(platformPath);
 			for (let i=0; i<elements.length; i++) {
 				let element = elements[i];
 				if (element.indexOf("v") !== -1) {

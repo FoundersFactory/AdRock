@@ -44,9 +44,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		
 	try {
 		appFile = req.files["app"][0];
-		console.log(appFile.originalname);
 		extension = appFile.originalname.toLowerCase().split(".").pop();
-		console.log(extension);
 	} catch (e) {
 		console.log("ERROR: post(/adrock/upload) + getting files -> " + e);
 	}
@@ -113,29 +111,38 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		
 		let rootPath = sanitiser.rootPath + "/" + bundleId.toLowerCase();
 		let externalRootPath = process.env.EXTERNAL_URL + "/adrock/" + bundleId.toLowerCase();
+		let platformPath = null;
 		if (extension === "ipa") {
-			rootPath += "/" + "ios";
+			platformPath = rootPath + "/" + "ios";
 			externalRootPath += "/" + "ios";
 		} else {
-			rootPath += "/" + "android";
+			platformPath = rootPath + "/" + "android";
 			externalRootPath += "/" + "android";
 		}
-		let indexPath = rootPath + "/index.html";
-		let folderPath = rootPath + "/v" + version;
+		let indexPath = platformPath + "/index.html";
+		let folderPath = platformPath + "/v" + version;
 		let appPath = folderPath + "/app." + extension;
-		let iconPath = rootPath + "/icon.png";
+		let iconPath = platformPath + "/icon.png";
 		
 		try {
 			//If we already have a folder named after the app's Bundle ID, we delete its index.html file
 			remove.removeSync(indexPath, { ignoreErrors: true, ignoreMissing: true });
+		} catch (e) {
+			console.log("ERROR: post(/adrock/upload) + deleting index.html -> " + e);
+		}
+		try {
 			//If we already have a version, we shall replace it
 			remove.removeSync(folderPath, { ignoreErrors: true, ignoreMissing: true });
+		} catch (e) {
+			console.log("ERROR: post(/adrock/upload) + deleting version -> " + e);
+		}
+		try {
 			//If we already have an icon, we shall replace it, but only if another one has been uploaded
 			if (iconFile) {
 				remove.removeSync(iconPath, { ignoreErrors: true, ignoreMissing: true });
 			}
 		} catch (e) {
-			console.log("ERROR: post(/adrock/upload) + deleting stuff -> " + e);
+			console.log("ERROR: post(/adrock/upload) + deleting icon -> " + e);
 		}
 		
 		//Creating folders if needed
@@ -148,6 +155,11 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 			fs.mkdirSync(rootPath);
 		} catch (e) {
 			console.log("WARNING: post(/adrock/upload) + creating root folder -> " + e);
+		}
+		try {
+			fs.mkdirSync(platformPath);
+		} catch (e) {
+			console.log("WARNING: post(/adrock/upload) + creating platform folder -> " + e);
 		}
 		try {
 			fs.mkdirSync(folderPath);

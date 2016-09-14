@@ -93,7 +93,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		let name = null;		
 		try {
 		    bundleId = req.body["bundleId"].split(" ").join("");
-			version = req.body["version"];
+			version = req.body["version"].toLowerCase();
 			name = req.body["name"];
 		}
 		catch (e) {
@@ -213,7 +213,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 				let element = elements[i];
 				if (element.indexOf("v") !== -1) {
 					list += listTemplate.replace("{URL}", process.env.EXTERNAL_URL)
-										.replace("{BUNDLE_ID}", bundleId)
+										.replace("{BUNDLE_ID}", bundleId.toLowerCase())
 										.replace("{VERSION}", version)
 										.replace("{VERSION}", version)
 										.replace("{NAME}", name)
@@ -232,6 +232,7 @@ router.post("/", upload.fields([{ name: "app", maxCount: 1 }, { name: "icon", ma
 		
 		//GREAT SUCCESS
 		erase();
+		console.log("GREAT SUCCESS");
 		res.status(200).send(externalRootPath + "/index.html");
 	});
 });

@@ -31,11 +31,11 @@ router.get("/:bundleId?/:platform?/:version?/:file?", function(req, res)
 			}
 			
 			if (!sendFile) {
-				res.status(200).send(fs.readFileSync("./apps/" + path, "utf8"));
+				res.status(200).send(fs.readFileSync(path, "utf8"));
 				return;
 			}
 			
-			res.status(200).sendFile("/home/node/Server/apps/" + path);
+			res.status(200).sendFile(path);
 		});
 	});
 });

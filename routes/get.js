@@ -15,8 +15,6 @@ router.get("/:bundleId?/:platform?/:version?/:file?", function(req, res)
 			return;
 		}
 		
-		path = "./apps/" + path;
-		
 		fs.stat(path, function(e, stats) {
 			if (e) {
 				console.log("ERROR: get(/adrock) + getting stuff -> " + e + "\nAt Path: " + req.path);

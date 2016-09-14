@@ -15,6 +15,14 @@ router.get("/:bundleId?/:platform?/:version?/:file?", function(req, res)
 			return;
 		}
 		
+		let sendFile = true;
+		if (path.indexOf(".html") !== -1) {
+			path = "./apps/" + path;
+			sendFile = false;
+		} else {
+			path = "/home/node/Server/apps/" + path;
+		}
+		
 		fs.stat(path, function(e, stats) {
 			if (e) {
 				console.log("ERROR: get(/adrock) + getting stuff -> " + e + "\nAt Path: " + req.path);
@@ -22,7 +30,7 @@ router.get("/:bundleId?/:platform?/:version?/:file?", function(req, res)
 				return;
 			}
 			
-			if (path.indexOf(".html") !== -1) {
+			if (!sendFile) {
 				res.status(200).send(fs.readFileSync("./apps/" + path, "utf8"));
 				return;
 			}

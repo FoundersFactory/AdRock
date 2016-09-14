@@ -3,7 +3,6 @@ const fs = require("fs");
 const sanitiser = require("./sanitiser.js");
 const multer = require("multer");
 const remove = require("remove");
-const plist = require("plist");
 const moment = require("moment");
 const dotenv = require("dotenv");
 

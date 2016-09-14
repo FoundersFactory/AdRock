@@ -43,7 +43,45 @@ This will:
 
 ### Express
 
-If you have an express app already and want to integrate **AdRock** to it
+If you have an express app already and want to integrate **AdRock** to it:
+
+```
+//Requires
+const dotenv = require("dotenv");
+const jwt = require("express-jwt");
+const cors = require("cors");
+
+//Other stuff you might want to do
+{...}
+
+//Loading the environment variables and JWT
+dotenv.load();
+
+const authenticate = jwt({
+	secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
+	audience: process.env.AUTH0_CLIENT_ID
+});
+
+//Other stuff you might want to do, especially creating your express app
+{...}
+
+//ADROCK!!!
+//Getting apps
+app.use("/adrock", require("./routes/get"));
+
+//Auth
+app.use("/adrock/upload", authenticate);
+
+//Uploading apps
+app.use("/adrock/upload", require("./routes/post"));
+app.use(function (err, req, res, next) {
+	if (err.name === 'UnauthorizedError') {
+		res.status(401).send('Invalid token...');
+		return;
+	}
+	next(err);
+});
+```
 
 ### Nginx
 

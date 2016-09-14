@@ -14,7 +14,6 @@
 		"express-jwt": "^5.0.0",
 		"multer": "^1.2.0",
 		"remove": "^0.1.0",
-		"plist": "^2.0.0",
 		"file-save": "^0.2.0",
 		"moment": "^2.14.0"
 	}

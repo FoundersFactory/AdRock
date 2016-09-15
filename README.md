@@ -32,8 +32,10 @@ EXTERNAL_URL=https://example.com
 
 * Pulling changes and running the app (from `/Server`):
 
-`forever stopall && git pull && npm install --save && \
-NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./forever.json`
+```
+forever stopall && git pull && npm install --save && \
+NODE_ENV=production forever --minUptime 1000 --spinSleepTime 1000 start ./forever.json
+```
 
 This will:
 

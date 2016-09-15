@@ -110,7 +110,7 @@ Upon success, you'll get the URL for the app's `index.html`, which is the same a
 
 ```
 	curl -X POST <domain>/adrock/upload \
-		-H Authorization=<your-jwt>
+		-H Authorization=Bearer <your-jwt>
 		-F app=<path/to/ipa>
 		-F icon=<path/to/icon>
 		-F bundleId=<full-app-bundle-id>

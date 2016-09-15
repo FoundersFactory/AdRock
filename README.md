@@ -99,7 +99,7 @@ To upload a new app or a new version for an existing app, you'll need to make a 
 
 * Auth0's JWT
 * (form field) `app` => an `.ipa` or `.apk` file of no more than 512mb in size
-* `icon` => a `.png` file for the app's icon (only necessary on the first upload)
+* `icon` => a `.png` file for the app's icon (only necessary on the first upload and for iOS apps)
 * `bundleId` => the app's full Bundle Id (eg. _com.example.raddest-app-ever_)
 * `version` => The app's version (eg. _0.3.1_)
 * `name` => The app's name (eg. _Raddest App Ever_)

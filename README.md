@@ -11,7 +11,7 @@ Rocking the AdHoc world! 🤘
 
 * Cloning the repo:
 
-`git clone git@gitlab.com:AdRock/Server.git`
+`git clone https://github.com/FoundersFactory/AdRock.git`
 * Installing Forever:
 
 `npm install forever -g`

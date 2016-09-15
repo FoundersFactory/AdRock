@@ -54,7 +54,7 @@ const cors = require("cors");
 //Other stuff you might want to do
 {...}
 
-//Loading the environment variables and JWT
+//Loading the environment variables and Auth0
 dotenv.load();
 
 const authenticate = jwt({
@@ -88,9 +88,9 @@ app.use(function (err, req, res, next) {
 If using Nginx, add this to your main `.conf` file:
 
 ```
-	location /adrock {
-		include	/<path-to-adrock>/Server/nginx.conf;
-	}
+location /adrock {
+	include	/<path-to-adrock>/Server/nginx.conf;
+}
 ```
 
 ## Using AdRock
